@@ -1,0 +1,43 @@
+[
+  {
+    "date": "2026-07-31",
+    "title": "Website Launch · Dev Log is Open",
+    "status": "new",
+    "body": "First version of the website is live. From now on, all drafts, update status, feedback, and guides will be organized here.\nThe Discord server is live too — everyone is welcome to join.",
+    "list": [
+      "Website v1 launched",
+      "Discord server opened",
+      "Feedback form enabled"
+    ]
+  },
+  {
+    "date": "2026-07-30",
+    "title": "Concept Draft: World Direction",
+    "status": "wip",
+    "body": "World-building draft is in progress. The subjects, the facility, and what the \"way out\" really is — all still being shaped.",
+    "list": [
+      "Subject lore (draft)",
+      "Facility layout (in progress)",
+      "Core gameplay document (not started)"
+    ]
+  },
+  {
+    "date": "2026-07-28",
+    "title": "Project Officially Named",
+    "status": "done",
+    "body": "Officially named HADASPHERE | EX. The Discord server and the name were set up together.",
+    "list": [
+      "Name finalized",
+      "Discord server created"
+    ]
+  },
+  {
+    "date": "2026-07-25",
+    "title": "The First Idea",
+    "status": "draft",
+    "body": "Where everything began. The first idea was a single sentence. Look at what it has grown into.",
+    "list": [
+      "Core concept draft (to be updated)"
+    ]
+  }
+]

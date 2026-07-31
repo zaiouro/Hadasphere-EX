@@ -306,7 +306,7 @@ footer .brand{display:block;margin-bottom:8px}
 // Edit your drafts and update status here.
 // Each entry supports: date, title, status, body (use \n for line breaks), list (optional), foot (optional)
 // status: draft / wip / done / new
-const LOG=[
+let LOG=[
   {
     date:'2026-07-31',
     title:'Website Launch · Dev Log is Open',
@@ -363,6 +363,16 @@ function renderLog(){
   document.getElementById('stat-done').textContent=c('done');
 }
 renderLog();
+
+fetch('devlog.json')
+  .then(r=>r.json())
+  .then(data=>{
+    if(Array.isArray(data)&&data.length>0){
+      LOG=data;
+      renderLog();
+    }
+  })
+  .catch(()=>{});
 
 // ===== GAME PROGRESS DATA =====
 // Edit the percentage here as you develop. 0 = not started, 100 = done.
