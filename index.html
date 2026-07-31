@@ -82,6 +82,18 @@ section h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:2px;col
 .entry li{font-size:13px;color:var(--dim)}
 .entry .foot{font-size:12px;color:var(--violet);margin-top:8px;font-style:italic}
 
+/* GAME PROGRESS */
+#progress{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+#progress-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.prog-item{background:#0d1119;border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.prog-item .prog-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.prog-item .prog-name{font-size:13px;letter-spacing:1px;color:#fff}
+.prog-item .prog-pct{font-size:13px;font-weight:700;color:var(--violet)}
+.prog-bar{height:6px;background:#0a0d14;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--purple),var(--cyan));border-radius:3px;transition:width 1s ease}
+.prog-note{font-size:12px;color:var(--dim);font-style:italic;margin-top:16px;text-align:center}
+@media(max-width:700px){#progress-grid{grid-template-columns:1fr}}
+
 /* FEEDBACK */
 #feedback{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .fb-wrap{display:grid;grid-template-columns:1fr 1fr;gap:26px}
@@ -142,6 +154,7 @@ footer .brand{display:block;margin-bottom:8px}
     <div class="brand">HADASPHERE<span> | EX</span></div>
     <nav>
       <a href="#devlog">Dev Log</a>
+      <a href="#progress">Progress</a>
       <a href="#feedback">Feedback</a>
       <a href="#guides">Guides</a>
       <a href="#discord">Discord</a>
@@ -174,6 +187,17 @@ footer .brand{display:block;margin-bottom:8px}
       <p>Drafts and update status, newest first.</p>
     </div>
     <div class="log" id="log"></div>
+  </div>
+</section>
+
+<section id="progress">
+  <div class="container">
+    <div class="sec-head">
+      <h2>Game Progress</h2>
+      <p>How far the Roblox game itself has come. Updated as development moves forward.</p>
+    </div>
+    <div id="progress-grid"></div>
+    <p id="progress-note" class="progress-note"></p>
   </div>
 </section>
 
@@ -225,19 +249,19 @@ footer .brand{display:block;margin-bottom:8px}
         <div class="icon">💬</div>
         <h3>Joining the Discord</h3>
         <ol>
-          <li>Click the <a href="https://discord.gg/5jfzhHTSVt" target="_blank" rel="noopener">Join the Discord</a> button above.</li>
-          <li>If the link is expired, tell the developer.</li>
+          <li>Click the <b>Join the Discord</b> button above.</li>
+          <li>If the link is expired, please send a feedback.</li>
           <li>Read <code>#rules</code> first.</li>
-          <li>Say hi in <code>#introductions</code>.</li>
+          <li>Say hi in <code>#chat</code>.</li>
         </ol>
       </div>
       <div class="card">
         <div class="icon">🐛</div>
         <h3>Reporting a Bug</h3>
         <ol>
-          <li>Go to the <code>#feedback</code> channel.</li>
-          <li>Title it: <code>[Bug] one sentence</code></li>
-          <li>Include: where it happened, what you did, what you saw.</li>
+          <li>Go to the feedback button above.</li>
+          <li>Title it anything, select <b>Bug Report</b>.</li>
+          <li>Desc: Where, What, How.</li>
           <li>Screenshots or recordings help a lot.</li>
         </ol>
       </div>
@@ -245,19 +269,20 @@ footer .brand{display:block;margin-bottom:8px}
         <div class="icon">💡</div>
         <h3>Suggesting an Idea</h3>
         <ol>
-          <li>Search first — it may already be suggested.</li>
-          <li>Title it: <code>[Suggestion] one sentence</code></li>
-          <li>Explain why you want it and how it could work.</li>
+          <li>Search existing one first.</li>
+          <li>Title it anything, select <b>Suggestion</b>.</li>
+          <li>Explain why and how it could work.</li>
           <li>Keep it to one clear idea per post.</li>
         </ol>
       </div>
       <div class="card">
-        <div class="icon">📢</div>
-        <h3>Tracking Progress</h3>
+        <div class="icon">📈</div>
+        <h3>Game Progress</h3>
+        <p>Track how the game itself is coming along.</p>
         <ol>
-          <li>This page's <a href="#devlog">Development Log</a> is always up to date.</li>
-          <li><code>#updates</code> on Discord has the full details.</li>
-          <li>Enable Discord notifications so you never miss a major update.</li>
+          <li>See the <a href="#progress">Progress</a> section above.</li>
+          <li>The tracker updates as development begins.</li>
+          <li>Not started yet — check back soon.</li>
         </ol>
       </div>
     </div>
@@ -338,6 +363,43 @@ function renderLog(){
   document.getElementById('stat-done').textContent=c('done');
 }
 renderLog();
+
+// ===== GAME PROGRESS DATA =====
+// Edit the percentage here as you develop. 0 = not started, 100 = done.
+const GAME_PROGRESS={
+  started:false,
+  stages:[
+    {name:'Concept & Story',pct:0},
+    {name:'World Building',pct:0},
+    {name:'Gameplay Mechanics',pct:0},
+    {name:'Maps / Environments',pct:0},
+    {name:'Scripting & Code',pct:0},
+    {name:'Art & Sound',pct:0},
+    {name:'Testing',pct:0},
+    {name:'Release',pct:0}
+  ]
+};
+function renderProgress(){
+  const grid=document.getElementById('progress-grid');
+  grid.innerHTML='';
+  GAME_PROGRESS.stages.forEach(s=>{
+    const item=document.createElement('div');
+    item.className='prog-item';
+    item.innerHTML=`
+      <div class="prog-head"><span class="prog-name">${s.name}</span><span class="prog-pct">${s.pct}%</span></div>
+      <div class="prog-bar"><div class="prog-fill" data-pct="${s.pct}"></div></div>
+    `;
+    grid.appendChild(item);
+  });
+  document.getElementById('progress-note').textContent=
+    GAME_PROGRESS.started
+      ? 'Development is underway. Progress updates are logged as work is completed.'
+      : 'Development has not started yet. Progress will be tracked here as the game is built.';
+  setTimeout(()=>{
+    document.querySelectorAll('.prog-fill').forEach(f=>{f.style.width=f.dataset.pct+'%';});
+  },100);
+}
+renderProgress();
 
 // ===== FEEDBACK =====
 const WEBHOOK_URL='https://discord.com/api/webhooks/1532701509207457983/Fw49wfXf-BrHiBjEPGMeNcAG9Si_PgxfE8m1rEgIRgR-n4Q8zWJYCqCwzn8vCwDLuemW';
