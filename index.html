@@ -48,6 +48,8 @@ h1 .ex{color:var(--purple);text-shadow:0 0 30px rgba(124,92,255,.6)}
 .btn.discord:hover{background:#8d6cff;box-shadow:0 0 40px rgba(124,92,255,.55);transform:translateY(-2px)}
 .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
 .btn.ghost:hover{border-color:var(--purple);color:var(--violet)}
+@keyframes btnPop{0%{transform:scale(1)}35%{transform:scale(.92)}70%{transform:scale(1.04)}100%{transform:scale(1)}}
+.btn.clicked,nav a.clicked,#discord-link.clicked{animation:btnPop .35s ease;box-shadow:0 0 34px rgba(124,92,255,.9)}
 .stats{display:flex;justify-content:center;gap:34px;margin-top:60px;flex-wrap:wrap}
 .stats div{text-align:center}
 .stats .num{font-size:30px;font-weight:800;color:#fff}
@@ -417,6 +419,16 @@ function tick(){
 }
 addEventListener('resize',()=>{resize();stars=Array.from({length:Math.floor(W*H/9000)},star);});
 init();tick();
+
+// ===== CLICK ANIMATION =====
+document.querySelectorAll('.btn, nav a, #discord-link').forEach(el=>{
+  el.addEventListener('click',()=>{
+    el.classList.remove('clicked');
+    void el.offsetWidth;
+    el.classList.add('clicked');
+    setTimeout(()=>el.classList.remove('clicked'),350);
+  });
+});
 
 // ===== SELECTION & CONTEXT MENU LOCK =====
 document.addEventListener('contextmenu',e=>e.preventDefault());
