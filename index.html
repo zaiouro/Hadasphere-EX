@@ -341,6 +341,31 @@ renderLog();
 
 // ===== FEEDBACK =====
 const WEBHOOK_URL='https://discord.com/api/webhooks/1532701509207457983/Fw49wfXf-BrHiBjEPGMeNcAG9Si_PgxfE8m1rEgIRgR-n4Q8zWJYCqCwzn8vCwDLuemW';
+
+// No-swearing filter
+const BANNED_WORDS=[
+  /\bfuc\w*\b/,/\bshit\w*\b/,/\bbitch\w*\b/,/\bass\b/,/\bbastard\w*\b/,/\bcunt\w*\b/,
+  /\bdick\w*\b/,/\bcock\b/,/\bpussy\w*\b/,/\bwhore\w*\b/,/\bslut\w*\b/,/\bnigg\w*\b/,
+  /\bfaggot\w*\b/,/\bskank\w*\b/,/\bfuk\w*\b/,/\bhoe\b/,/\bcrap\b/,/\bdamn\b/,/\bhell\b/,
+  /\bpenis\b/,/\bvagina\b/,/\bsex\b/,/\bretard\w*\b/,/\brape\b/,/\bnazi\w*\b/
+];
+const BANNED_CENSORED=[
+  /f[^a-z]*\*+[^a-z]*ck/i,/sh[^a-z]*\*+[^a-z]*t/i,/b[^a-z]*\*+[^a-z]*tch/i,
+  /a[^a-z]*\*+[^a-z]*sh/i,/d[^a-z]*\*+[^a-z]*ck/i,/c[^a-z]*\*+[^a-z]*ck/i,
+  /f[^a-z]*u[^a-z]*[ck]/i,/s[^a-z]*h[^a-z]*i[^a-z]*t/i
+];
+const BANNED_ZH=[/傻逼/,/煞笔/,/傻笔/,/肏/,/他妈的/,/他媽的/,/幹你娘/,/干你娘/,/操你妈/,/操你媽/,/草泥马/,/草泥馬/,/去你妈的/,/去你媽的/,/王八蛋/,/狗屎/,/賤人/,/贱人/];
+function containsSwear(t){
+  const norm=t.toLowerCase().replace(/[^\w\s']/g,'')
+    .replace(/0/g,'o').replace(/1/g,'i').replace(/3/g,'e')
+    .replace(/4/g,'a').replace(/5/g,'s').replace(/7/g,'t').replace(/8/g,'b')
+    .replace(/@/g,'a').replace(/\$/g,'s').replace(/!/g,'i');
+  if(BANNED_WORDS.some(r=>r.test(norm)))return true;
+  if(BANNED_CENSORED.some(r=>r.test(t)))return true;
+  if(BANNED_ZH.some(r=>r.test(t)))return true;
+  return false;
+}
+
 const form=document.getElementById('fb-form');
 const shotInput=document.getElementById('fb-shot');
 const preview=document.getElementById('fb-preview');
@@ -363,6 +388,12 @@ form.addEventListener('submit',e=>{
   if(!title||!body){
     msg.style.color='var(--red)';
     msg.textContent='Both the title and the details are required.';
+    return;
+  }
+  const shotNames=[...shotInput.files].map(f=>f.name).join(' ');
+  if(containsSwear(name)||containsSwear(title)||containsSwear(body)||containsSwear(shotNames)){
+    msg.style.color='var(--red)';
+    msg.textContent='Keep it clean please. Swear words are not allowed — your feedback was not sent.';
     return;
   }
   const typeMap={suggestion:'Suggestion',bug:'Bug Report',question:'Question',other:'Other'};
