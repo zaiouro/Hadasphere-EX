@@ -360,7 +360,10 @@ form.addEventListener('submit',e=>{
   }
   const typeMap={suggestion:'Suggestion',bug:'Bug Report',question:'Question',other:'Other'};
   const shots=[...shotInput.files].map(f=>`📎 ${f.name}`).join('\n');
-  const text=`[${typeMap[type]}] ${title}\n${body}${shots?`\n${shots}`:''}\n— ${name}`;
+  const blockLines=[`**${title}**`];
+  if(body)blockLines.push(body);
+  if(shots)blockLines.push(shots);
+  const text=`*${name}* [${typeMap[type]}]\n\n${blockLines.map(l=>`> ${l}`).join('\n')}`;
   const sendBtn=document.getElementById('fb-send');
   sendBtn.disabled=true;
   sendBtn.textContent='SENDING...';
