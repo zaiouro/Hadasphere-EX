@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HADASPHERE | EX — Development Log</title>
+<meta name="description" content="HADASPHERE | EX — an unreleased Roblox analog horror myth game. Development drafts, update status, feedback, and guides live here. The way out is always there. If you can find it.">
+<style>
+:root{
+  --bg:#05060a;
+  --panel:#0b0e16;
+  --line:#1c2233;
+  --purple:#7c5cff;
+  --violet:#a78bff;
+  --cyan:#4dd8ff;
+  --red:#ff5c5c;
+  --green:#4dd88a;
+  --text:#c9d2e4;
+  --dim:#6b7690;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;line-height:1.7;overflow-x:hidden;user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;cursor:default}
+input,textarea,select{user-select:text;-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text}
+a{color:var(--cyan);text-decoration:none}
+canvas#bg{position:fixed;inset:0;z-index:-2}
+.noise{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.container{max-width:980px;margin:0 auto;padding:0 24px}
+header{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(10px);background:rgba(5,6,10,.7);border-bottom:1px solid rgba(28,34,51,.6)}
+header .container{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{font-weight:800;letter-spacing:2px;font-size:15px;color:#fff}
+.brand span{color:var(--purple)}
+nav{display:flex;gap:22px;align-items:center}
+nav a{color:var(--dim);font-size:13px;letter-spacing:1px;transition:color .2s}
+nav a:hover{color:#fff}
+
+.hero{min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:110px 24px 60px;position:relative}
+.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--purple);color:var(--violet);padding:6px 16px;border-radius:999px;font-size:12px;letter-spacing:2px;margin-bottom:28px}
+.badge .dot{width:8px;height:8px;border-radius:50%;background:var(--purple);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+h1{font-size:clamp(44px,9vw,92px);font-weight:900;letter-spacing:4px;line-height:1;color:#fff;margin-bottom:14px}
+h1 .ex{color:var(--purple);text-shadow:0 0 30px rgba(124,92,255,.6)}
+.tagline{font-size:clamp(15px,2.5vw,20px);color:var(--dim);letter-spacing:2px;margin-bottom:12px;font-weight:300}
+.hero-note{font-size:13px;color:var(--violet);opacity:.85;letter-spacing:1px;margin-bottom:40px;font-style:italic}
+.cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;padding:14px 34px;border-radius:8px;font-size:14px;letter-spacing:2px;font-weight:600;transition:all .25s;cursor:pointer;border:none;font-family:inherit}
+.btn.discord{background:var(--purple);color:#fff;box-shadow:0 0 24px rgba(124,92,255,.35)}
+.btn.discord:hover{background:#8d6cff;box-shadow:0 0 40px rgba(124,92,255,.55);transform:translateY(-2px)}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
+.btn.ghost:hover{border-color:var(--purple);color:var(--violet)}
+.stats{display:flex;justify-content:center;gap:34px;margin-top:60px;flex-wrap:wrap}
+.stats div{text-align:center}
+.stats .num{font-size:30px;font-weight:800;color:#fff}
+.stats .lbl{font-size:11px;letter-spacing:2px;color:var(--dim);margin-top:2px}
+
+section{padding:80px 0}
+section h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:2px;color:#fff;margin-bottom:14px}
+.sec-head{max-width:680px;margin:0 auto 44px}
+.sec-head h2::before{content:'// ';color:var(--purple)}
+.sec-head p{color:var(--dim);font-size:14.5px}
+
+/* DEV LOG */
+.log{display:flex;flex-direction:column;gap:18px}
+.entry{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--purple);border-radius:10px;padding:22px 24px;transition:border-color .2s}
+.entry:hover{border-left-color:var(--cyan)}
+.entry .meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.entry .date{font-size:12px;color:var(--dim);letter-spacing:1px}
+.tag{font-size:11px;padding:3px 12px;border-radius:999px;letter-spacing:1px}
+.tag.draft{background:rgba(124,92,255,.15);color:var(--violet);border:1px solid var(--purple)}
+.tag.wip{background:rgba(77,216,255,.12);color:var(--cyan);border:1px solid var(--cyan)}
+.tag.done{background:rgba(77,216,138,.12);color:var(--green);border:1px solid var(--green)}
+.tag.new{background:rgba(255,92,92,.12);color:var(--red);border:1px solid var(--red)}
+.entry h3{font-size:16px;color:#fff;letter-spacing:1px;margin-bottom:6px}
+.entry p{font-size:13.5px;color:var(--dim)}
+.entry ul{margin-top:6px;padding-left:20px}
+.entry li{font-size:13px;color:var(--dim)}
+.entry .foot{font-size:12px;color:var(--violet);margin-top:8px;font-style:italic}
+
+/* FEEDBACK */
+#feedback{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.fb-wrap{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.fb-info p{font-size:14px;color:var(--dim);margin-bottom:14px}
+.fb-info b{color:var(--violet)}
+.fb-form{background:#0d1119;border:1px solid var(--line);border-radius:12px;padding:22px}
+.fb-form label{display:block;font-size:12px;letter-spacing:1px;color:var(--dim);margin-bottom:6px}
+.fb-form input,.fb-form textarea,.fb-form select{width:100%;background:#0a0d14;border:1px solid var(--line);border-radius:8px;color:var(--text);padding:10px 12px;font-size:14px;font-family:inherit;margin-bottom:16px;outline:none;transition:border-color .2s}
+.fb-form input:focus,.fb-form textarea:focus,.fb-form select:focus{border-color:var(--purple)}
+.fb-form textarea{min-height:110px;resize:vertical}
+.fb-form .row{display:flex;gap:12px}
+.fb-form .row>div{flex:1}
+#fb-send{width:100%;background:var(--purple);color:#fff;border:none;padding:12px;border-radius:8px;font-size:14px;letter-spacing:2px;font-weight:600;cursor:pointer;transition:all .2s}
+#fb-send:hover{background:#8d6cff;box-shadow:0 0 24px rgba(124,92,255,.4)}
+#fb-msg{font-size:12px;color:var(--green);margin-top:10px;min-height:18px;text-align:center}
+#fb-shot{width:100%;background:#0a0d14;border:1px dashed var(--line);border-radius:8px;color:var(--dim);padding:10px 12px;font-size:13px;font-family:inherit;margin-bottom:16px;outline:none;cursor:pointer;transition:border-color .2s}
+#fb-shot:hover{border-color:var(--purple);color:var(--text)}
+#fb-preview{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+#fb-preview img{width:72px;height:72px;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+
+/* GUIDES */
+.guides{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:24px 22px;transition:all .25s}
+.card:hover{transform:translateY(-3px);border-color:var(--purple)}
+.card .icon{font-size:26px;margin-bottom:12px}
+.card h3{font-size:15px;color:#fff;letter-spacing:1px;margin-bottom:8px}
+.card p{font-size:13px;color:var(--dim)}
+.card ol{padding-left:18px;margin-top:6px}
+.card li{font-size:13px;color:var(--dim)}
+code{background:#0a0d14;border:1px solid var(--line);padding:1px 6px;border-radius:4px;font-size:12px;color:var(--cyan)}
+
+/* DISCORD */
+.discord-band{text-align:center;padding:90px 24px}
+.discord-band h2{margin-bottom:12px}
+.discord-band p{color:var(--dim);max-width:520px;margin:0 auto 34px}
+#discord-link{display:inline-block;background:#5865F2;color:#fff;padding:16px 40px;border-radius:10px;font-size:15px;letter-spacing:1px;font-weight:700;transition:all .25s;box-shadow:0 0 30px rgba(88,101,242,.35)}
+#discord-link:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(88,101,242,.55)}
+
+footer{border-top:1px solid var(--line);padding:36px 0;text-align:center;color:var(--dim);font-size:13px}
+footer .brand{display:block;margin-bottom:8px}
+.notaff{font-size:11px;opacity:.7}
+
+@media(max-width:700px){
+  nav{display:none}
+  .cta{flex-direction:column}
+  .btn{width:100%}
+  .fb-wrap{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="noise"></div>
+
+<header>
+  <div class="container">
+    <div class="brand">HADASPHERE<span> | EX</span></div>
+    <nav>
+      <a href="#devlog">Dev Log</a>
+      <a href="#feedback">Feedback</a>
+      <a href="#guides">Guides</a>
+      <a href="#discord">Discord</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="container">
+    <div class="badge"><span class="dot"></span> IN DEVELOPMENT · NOT RELEASED</div>
+    <h1>HADASPHERE<br><span class="ex">EX</span></h1>
+    <p class="tagline">The way out is always there. If you can find it.</p>
+    <p class="hero-note">"Every subject deserves a reason to leave."</p>
+    <div class="cta">
+      <a class="btn discord" href="https://discord.gg/5jfzhHTSVt" target="_blank" rel="noopener">JOIN THE DISCORD</a>
+      <a class="btn ghost" href="#devlog">SEE DEV PROGRESS</a>
+    </div>
+    <div class="stats">
+      <div><div class="num" id="stat-drafts">0</div><div class="lbl">DRAFTS</div></div>
+      <div><div class="num" id="stat-wips">0</div><div class="lbl">IN PROGRESS</div></div>
+      <div><div class="num" id="stat-done">0</div><div class="lbl">COMPLETED</div></div>
+    </div>
+  </div>
+</div>
+
+<section id="devlog">
+  <div class="container">
+    <div class="sec-head">
+      <h2>Development Log</h2>
+      <p>Drafts and update status, newest first.</p>
+    </div>
+    <div class="log" id="log"></div>
+  </div>
+</section>
+
+<section id="feedback">
+  <div class="container">
+    <div class="sec-head">
+      <h2>Feedback</h2>
+      <p>Your ideas shape this world. Leave your voice here.</p>
+    </div>
+    <div class="fb-wrap">
+      <div class="fb-info">
+        <p style="color:var(--violet);font-style:italic;font-size:14px">They said "it's just a dream." but what if I made it?</p>
+        <p><b>Want to appeal something?</b> Fill the form on the right hand. Your words are heard from the personnels in Hadasphere.</p>
+        <p><b>Reporting a bug?</b> Make sure to tell us any details also please paste a screenshot so we can fix properly.</p>
+        <p><b>"How to track my feedback?"</b> Join the Discord and search for your name in <code>#feedback</code>.</p>
+      </div>
+      <form class="fb-form" id="fb-form">
+        <label>YOUR NAME (OPTIONAL)</label>
+        <input type="text" id="fb-name" placeholder="Subject #0001">
+        <label>TYPE</label>
+        <select id="fb-type">
+          <option value="suggestion">Suggestion</option>
+          <option value="bug">Bug Report</option>
+          <option value="question">Question</option>
+          <option value="other">Other</option>
+        </select>
+        <label>TITLE</label>
+        <input type="text" id="fb-title" placeholder="One sentence describing it">
+        <label>DETAILS</label>
+        <textarea id="fb-body" placeholder="Explain your idea / what happened / add screenshot notes"></textarea>
+        <label>SCREENSHOT (OPTIONAL — ATTACH IT IN DISCORD TOO)</label>
+        <input type="file" id="fb-shot" accept="image/*" multiple>
+        <div id="fb-preview"></div>
+        <button type="submit" id="fb-send">SUBMIT FEEDBACK</button>
+        <div id="fb-msg"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="guides">
+  <div class="container">
+    <div class="sec-head">
+      <h2>Guides</h2>
+      <p>A little guidance for the newcomers.</p>
+    </div>
+    <div class="guides">
+      <div class="card">
+        <div class="icon">💬</div>
+        <h3>Joining the Discord</h3>
+        <ol>
+          <li>Click the <a href="https://discord.gg/5jfzhHTSVt" target="_blank" rel="noopener">Join the Discord</a> button above.</li>
+          <li>If the link is expired, tell the developer.</li>
+          <li>Read <code>#rules</code> first.</li>
+          <li>Say hi in <code>#introductions</code>.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <div class="icon">🐛</div>
+        <h3>Reporting a Bug</h3>
+        <ol>
+          <li>Go to the <code>#feedback</code> channel.</li>
+          <li>Title it: <code>[Bug] one sentence</code></li>
+          <li>Include: where it happened, what you did, what you saw.</li>
+          <li>Screenshots or recordings help a lot.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <div class="icon">💡</div>
+        <h3>Suggesting an Idea</h3>
+        <ol>
+          <li>Search first — it may already be suggested.</li>
+          <li>Title it: <code>[Suggestion] one sentence</code></li>
+          <li>Explain why you want it and how it could work.</li>
+          <li>Keep it to one clear idea per post.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <div class="icon">📢</div>
+        <h3>Tracking Progress</h3>
+        <ol>
+          <li>This page's <a href="#devlog">Development Log</a> is always up to date.</li>
+          <li><code>#updates</code> on Discord has the full details.</li>
+          <li>Enable Discord notifications so you never miss a major update.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="discord-band" id="discord">
+  <h2>This is where everyone gathers</h2>
+  <p>Join the Discord to follow development, join discussions, and leave your feedback. The starting point is always here.</p>
+  <a id="discord-link" href="https://discord.gg/5jfzhHTSVt" target="_blank" rel="noopener">JOIN THE DISCORD SERVER</a>
+</div>
+
+<footer>
+  <div class="brand">HADASPHERE<span style="color:var(--purple)"> | EX</span></div>
+  <p>HADASPHERE | EX is an independently developed Roblox game. Not released yet.</p>
+  <p class="notaff">Not affiliated with or endorsed by Roblox Corporation.</p>
+</footer>
+
+<script>
+// ===== DEVELOPMENT LOG DATA =====
+// Edit your drafts and update status here.
+// Each entry supports: date, title, status, body (use \n for line breaks), list (optional), foot (optional)
+// status: draft / wip / done / new
+const LOG=[
+  {
+    date:'2026-07-31',
+    title:'Website Launch · Dev Log is Open',
+    status:'new',
+    body:'First version of the website is live. From now on, all drafts, update status, feedback, and guides will be organized here.\nThe Discord server is live too — everyone is welcome to join.',
+    list:['Website v1 launched','Discord server opened','Feedback form enabled']
+  },
+  {
+    date:'2026-07-30',
+    title:'Concept Draft: World Direction',
+    status:'wip',
+    body:'World-building draft is in progress. The subjects, the facility, and what the "way out" really is — all still being shaped.',
+    list:['Subject lore (draft)','Facility layout (in progress)','Core gameplay document (not started)']
+  },
+  {
+    date:'2026-07-28',
+    title:'Project Officially Named',
+    status:'done',
+    body:'Officially named HADASPHERE | EX. The Discord server and the name were set up together.',
+    list:['Name finalized','Discord server created']
+  },
+  {
+    date:'2026-07-25',
+    title:'The First Idea',
+    status:'draft',
+    body:'Where everything began. The first idea was a single sentence. Look at what it has grown into.',
+    list:['Core concept draft (to be updated)']
+  }
+];
+
+// Render dev log
+const logEl=document.getElementById('log');
+function renderLog(){
+  logEl.innerHTML='';
+  LOG.forEach(e=>{
+    const el=document.createElement('div');
+    el.className='entry';
+    const statusMap={draft:'Draft',wip:'In Progress',done:'Completed',new:'Latest'};
+    el.innerHTML=`
+      <div class="meta">
+        <span class="date">${e.date}</span>
+        <span class="tag ${e.status}">${statusMap[e.status]||e.status}</span>
+      </div>
+      <h3>${e.title}</h3>
+      <p>${e.body.replace(/\n/g,'<br>')}</p>
+      ${e.list?`<ul>${e.list.map(i=>`<li>${i}</li>`).join('')}</ul>`:''}
+      ${e.foot?`<div class="foot">${e.foot}</div>`:''}
+    `;
+    logEl.appendChild(el);
+  });
+  const c=n=>LOG.filter(e=>e.status===n).length;
+  document.getElementById('stat-drafts').textContent=c('draft');
+  document.getElementById('stat-wips').textContent=c('wip');
+  document.getElementById('stat-done').textContent=c('done');
+}
+renderLog();
+
+// ===== FEEDBACK =====
+const WEBHOOK_URL='https://discord.com/api/webhooks/1532701509207457983/Fw49wfXf-BrHiBjEPGMeNcAG9Si_PgxfE8m1rEgIRgR-n4Q8zWJYCqCwzn8vCwDLuemW';
+const form=document.getElementById('fb-form');
+const shotInput=document.getElementById('fb-shot');
+const preview=document.getElementById('fb-preview');
+shotInput.addEventListener('change',()=>{
+  preview.innerHTML='';
+  [...shotInput.files].forEach(f=>{
+    const img=document.createElement('img');
+    img.src=URL.createObjectURL(f);
+    img.title=f.name;
+    preview.appendChild(img);
+  });
+});
+form.addEventListener('submit',e=>{
+  e.preventDefault();
+  const name=document.getElementById('fb-name').value.trim()||'Subject #0001';
+  const type=document.getElementById('fb-type').value;
+  const title=document.getElementById('fb-title').value.trim();
+  const body=document.getElementById('fb-body').value.trim();
+  const msg=document.getElementById('fb-msg');
+  if(!title||!body){
+    msg.style.color='var(--red)';
+    msg.textContent='Both the title and the details are required.';
+    return;
+  }
+  const typeMap={suggestion:'Suggestion',bug:'Bug Report',question:'Question',other:'Other'};
+  const shots=[...shotInput.files].map(f=>`📎 ${f.name}`).join('\n');
+  const text=`[${typeMap[type]}] ${title}\n${body}${shots?`\n${shots}`:''}\n— ${name}`;
+  const sendBtn=document.getElementById('fb-send');
+  sendBtn.disabled=true;
+  sendBtn.textContent='SENDING...';
+  fetch(WEBHOOK_URL,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({content:text})
+  })
+  .then(r=>{
+    if(!r.ok)throw new Error(r.status);
+    msg.style.color='var(--green)';
+    msg.innerHTML=`Sent! Your feedback has been delivered to the Discord <code>#feedback</code> channel.${shots?' Remember to attach your screenshot(s) to the message in Discord too.':''}`;
+  })
+  .catch(()=>{
+    msg.style.color='var(--red)';
+    msg.textContent='Send failed. Copy it instead? Try again, or write directly in the Discord feedback channel.';
+  })
+  .finally(()=>{
+    sendBtn.disabled=false;
+    sendBtn.textContent='SUBMIT FEEDBACK';
+  });
+  preview.innerHTML='';
+  form.reset();
+});
+
+// ===== STARFIELD BACKGROUND =====
+const canvas=document.getElementById('bg');
+const ctx=canvas.getContext('2d');
+let W,H,stars=[],conn=120;
+function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;}
+function star(){return{x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.4+.2,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25};}
+function init(){resize();stars=Array.from({length:Math.floor(W*H/9000)},star);}
+function tick(){
+  ctx.clearRect(0,0,W,H);
+  for(const s of stars){
+    s.x+=s.vx;s.y+=s.vy;
+    if(s.x<0)s.x=W;if(s.x>W)s.x=0;if(s.y<0)s.y=H;if(s.y>H)s.y=0;
+    ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle='rgba(150,160,220,.55)';ctx.fill();
+  }
+  for(let i=0;i<stars.length;i++){
+    for(let j=i+1;j<stars.length;j++){
+      const a=stars[i],b=stars[j];
+      const dx=a.x-b.x,dy=a.y-b.y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<conn){
+        ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+        ctx.strokeStyle=`rgba(124,92,255,${(1-d/conn)*.25})`;ctx.lineWidth=.5;ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(tick);
+}
+addEventListener('resize',()=>{resize();stars=Array.from({length:Math.floor(W*H/9000)},star);});
+init();tick();
+
+// ===== SELECTION & CONTEXT MENU LOCK =====
+document.addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('keydown',e=>{
+  if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['I','J','C'].includes(e.key.toUpperCase()))||(e.ctrlKey&&e.key.toLowerCase()==='u')){
+    e.preventDefault();
+  }
+});
+</script>
+</body>
+</html>
