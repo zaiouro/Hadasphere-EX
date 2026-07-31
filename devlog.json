@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-07-31",
+    "title": "test",
+    "status": "wip",
+    "body": ""
+  },
+  {
+    "date": "2026-07-31",
     "title": "Dev Log Bot is Live",
     "status": "new",
     "body": "The Discord bot is online. Post in the announcement channel and it syncs straight into this Dev Log automatically.",
