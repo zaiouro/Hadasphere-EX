@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-07-31",
+    "title": "test",
+    "status": "wip",
+    "body": ""
+  },
+  {
+    "date": "2026-07-31",
     "title": "Website Launch · Dev Log is Open",
     "status": "new",
     "body": "First version of the website is live. From now on, all drafts, update status, feedback, and guides will be organized here.\nThe Discord server is live too — everyone is welcome to join.",
