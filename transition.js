@@ -18,6 +18,8 @@ if(viaNav){
 document.querySelectorAll('a[href]').forEach(a=>{
   const href=a.getAttribute('href');
   if(!href||href.startsWith('http'))return;
+  const curPage=location.pathname.split('/').pop()||'index.html';
+  if(href.split('#')[0]===curPage)return;
   a.addEventListener('click',e=>{
     e.preventDefault();
     sessionStorage.setItem('hd_nav','1');
