@@ -34,7 +34,7 @@ nav a.active{color:#fff;border-bottom-color:var(--purple)}
 section{padding:80px 0}
 section h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:2px;color:#fff;margin-bottom:14px}
 .sec-head{max-width:680px;margin:0 auto 44px}
-.sec-head h2::before{content:'// ';color:var(--purple)}
+
 .sec-head p{color:var(--dim);font-size:14.5px}
 code{background:#0a0d14;border:1px solid var(--line);padding:1px 6px;border-radius:4px;font-size:12px;color:var(--cyan)}
 footer{border-top:1px solid var(--line);padding:36px 0;text-align:center;color:var(--dim);font-size:13px}
