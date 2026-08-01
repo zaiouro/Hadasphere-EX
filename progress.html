@@ -41,7 +41,8 @@ nav a{color:var(--dim);font-size:13px;letter-spacing:1px;transition:color .2s;pa
 nav a:hover{color:#fff}
 nav a.active{color:#fff;border-bottom-color:var(--purple)}
 #transition{position:fixed;inset:0;background:#0a0714;z-index:1000;pointer-events:none;opacity:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px}
-#transition.loading{opacity:1;pointer-events:auto;animation:transLoad 1.8s ease forwards}
+#transition.cover,#transition.loading{opacity:1;pointer-events:auto}
+#transition.loading{animation:transLoad 1.8s ease forwards}
 #transition.active{animation:transIn 1.8s ease forwards}
 #transition .t-txt{font-size:12px;letter-spacing:6px;color:var(--violet);opacity:.8}
 @keyframes transLoad{0%{opacity:1}65%{opacity:1}100%{opacity:0}}
@@ -88,7 +89,7 @@ footer .brand{display:block;margin-bottom:8px}
 <div class="aurora"></div>
 <div class="abyss"></div>
 <div class="noise"></div>
-<div id="transition"><span class="t-txt">Hadasphere</span></div>
+<div id="transition" class="cover"><span class="t-txt">Hadasphere</span></div>
 
 <header>
   <div class="container">
@@ -207,7 +208,10 @@ updateGradient();
 const transition=document.getElementById('transition');
 window.addEventListener('load',()=>{
   transition.classList.add('loading');
-  setTimeout(()=>transition.classList.remove('loading'),1800);
+  setTimeout(()=>{
+    transition.classList.remove('loading');
+    transition.classList.remove('cover');
+  },1800);
 });
 document.querySelectorAll('a[href]').forEach(a=>{
   const href=a.getAttribute('href');
