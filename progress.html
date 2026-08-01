@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hadasphere — Home</title>
-  <meta name="description" content="Hadasphere — an unreleased Roblox analog horror myth game. Beyond the sky, below the abyss.">
+<title>Hadasphere — Game Progress</title>
+  <meta name="description" content="Hadasphere — game progress. How far the Roblox game itself has come.">
 <style>
 :root{
   --bg:#05060a;
@@ -45,39 +45,28 @@ nav a.active{color:#fff;border-bottom-color:var(--purple)}
 @keyframes transIn{0%{opacity:0}20%{opacity:1}80%{opacity:1}100%{opacity:0}}
 @keyframes transGlitch{0%,100%{transform:translate(0)}20%{transform:translate(-4px,2px)}40%{transform:translate(4px,-2px)}60%{transform:translate(-2px,-2px)}80%{transform:translate(2px,2px)}}
 #transition.active .t-txt{animation:transGlitch .65s ease forwards}
-.hero{min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:110px 24px 60px;position:relative}
-.hero::before{content:'';position:absolute;top:0;left:50%;width:1px;height:100%;transform:translateX(-50%);pointer-events:none;background:linear-gradient(180deg,rgba(124,92,255,.6),rgba(77,216,255,.28) 40%,rgba(255,255,255,.06) 62%,transparent 78%)}
-.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--purple);color:var(--violet);padding:6px 16px;border-radius:999px;font-size:12px;letter-spacing:2px;margin-bottom:28px}
-.badge .dot{width:8px;height:8px;border-radius:50%;background:var(--purple);animation:pulse 1.6s infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
-h1{font-size:clamp(44px,9vw,92px);font-weight:900;letter-spacing:4px;line-height:1;color:#fff;margin-bottom:14px}
-h1 .ex{color:var(--purple);text-shadow:0 0 30px rgba(124,92,255,.6)}
-.tagline{font-size:clamp(15px,2.5vw,20px);color:var(--dim);letter-spacing:2px;margin-bottom:12px;font-weight:300}
-.hero-note{font-size:13px;color:var(--violet);opacity:.85;letter-spacing:1px;margin-bottom:40px;font-style:italic}
-.cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-.btn{display:inline-block;padding:14px 34px;border-radius:8px;font-size:14px;letter-spacing:2px;font-weight:600;transition:all .25s;cursor:pointer;border:none;font-family:inherit}
-.btn.discord{background:var(--purple);color:#fff;box-shadow:0 0 24px rgba(124,92,255,.35)}
-.btn.discord:hover{background:#8d6cff;box-shadow:0 0 40px rgba(124,92,255,.55);transform:translateY(-2px)}
-.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
-.btn.ghost:hover{border-color:var(--purple);color:var(--violet)}
-.stats{display:flex;justify-content:center;gap:34px;margin-top:60px;flex-wrap:wrap}
-.stats div{text-align:center}
-.stats .num{font-size:30px;font-weight:800;color:#fff}
-.stats .lbl{font-size:11px;letter-spacing:2px;color:var(--dim);margin-top:2px}
 .page{padding-top:96px}
 section{padding:80px 0}
 section h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:2px;color:#fff;margin-bottom:14px}
 .sec-head{max-width:680px;margin:0 auto 44px}
 .sec-head h2::before{content:'// ';color:var(--purple)}
 .sec-head p{color:var(--dim);font-size:14.5px}
+#progress{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line);min-height:72vh}
+#progress-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.prog-item{background:#0d1119;border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.prog-item .prog-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.prog-item .prog-name{font-size:13px;letter-spacing:1px;color:#fff}
+.prog-item .prog-pct{font-size:13px;font-weight:700;color:var(--violet)}
+.prog-bar{height:6px;background:#0a0d14;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--purple),var(--cyan));border-radius:3px;transition:width 1s ease}
+.prog-note{font-size:12px;color:var(--dim);font-style:italic;margin-top:16px;text-align:center}
+@media(max-width:700px){
+  nav{display:none}
+  #progress-grid{grid-template-columns:1fr}
+}
 footer{border-top:1px solid var(--line);padding:36px 0;text-align:center;color:var(--dim);font-size:13px}
 footer .brand{display:block;margin-bottom:8px}
 .notaff{font-size:11px;opacity:.7}
-@media(max-width:700px){
-  nav{display:none}
-  .cta{flex-direction:column}
-  .btn{width:100%}
-}
 </style>
 </head>
 <body>
@@ -93,9 +82,9 @@ footer .brand{display:block;margin-bottom:8px}
   <div class="container">
     <a class="brand" href="index.html">Hadasphere</a>
     <nav>
-      <a href="index.html" class="active">Home</a>
+      <a href="index.html">Home</a>
       <a href="devlog.html">Dev Log</a>
-      <a href="progress.html">Progress</a>
+      <a href="progress.html" class="active">Progress</a>
       <a href="feedback.html">Feedback</a>
       <a href="guides.html">Guides</a>
       <a href="discord.html">Discord</a>
@@ -103,23 +92,16 @@ footer .brand{display:block;margin-bottom:8px}
   </div>
 </header>
 
-<div class="hero">
+<section class="page" id="progress">
   <div class="container">
-    <div class="badge"><span class="dot"></span> IN DEVELOPMENT · NOT RELEASED</div>
-    <h1>Hadasphere</h1>
-    <p class="tagline">Beyond the sky, below the abyss.</p>
-    <p class="hero-note">"Every subject deserves a reason to leave."</p>
-    <div class="cta">
-      <a class="btn discord" href="https://discord.gg/5jfzhHTSVt" target="_blank" rel="noopener">JOIN THE DISCORD</a>
-      <a class="btn ghost" href="progress.html">SEE DEV PROGRESS</a>
+    <div class="sec-head">
+      <h2>Game Progress</h2>
+      <p>How far the Roblox game itself has come. Updated as development moves forward.</p>
     </div>
-    <div class="stats">
-      <div><div class="num" id="stat-drafts">0</div><div class="lbl">DRAFTS</div></div>
-      <div><div class="num" id="stat-wips">0</div><div class="lbl">IN PROGRESS</div></div>
-      <div><div class="num" id="stat-done">0</div><div class="lbl">COMPLETED</div></div>
-    </div>
+    <div id="progress-grid"></div>
+    <p id="progress-note" class="prog-note"></p>
   </div>
-</div>
+</section>
 
 <footer>
   <div class="brand">Hadasphere</div>
@@ -128,18 +110,42 @@ footer .brand{display:block;margin-bottom:8px}
 </footer>
 
 <script>
-// ===== STATS =====
-const STAT_MAP={draft:'stat-drafts',wip:'stat-wips',done:'stat-done'};
-fetch('devlog.json')
-  .then(r=>r.json())
-  .then(data=>{
-    if(Array.isArray(data)&&data.length>0){
-      Object.keys(STAT_MAP).forEach(k=>{
-        document.getElementById(STAT_MAP[k]).textContent=data.filter(e=>e.status===k).length;
-      });
-    }
-  })
-  .catch(()=>{});
+// ===== GAME PROGRESS DATA =====
+// Edit the percentage here as you develop. 0 = not started, 100 = done.
+const GAME_PROGRESS={
+  started:false,
+  stages:[
+    {name:'Concept & Story',pct:0},
+    {name:'World Building',pct:0},
+    {name:'Gameplay Mechanics',pct:0},
+    {name:'Maps / Environments',pct:0},
+    {name:'Scripting & Code',pct:0},
+    {name:'Art & Sound',pct:0},
+    {name:'Testing',pct:0},
+    {name:'Release',pct:0}
+  ]
+};
+function renderProgress(){
+  const grid=document.getElementById('progress-grid');
+  grid.innerHTML='';
+  GAME_PROGRESS.stages.forEach(s=>{
+    const item=document.createElement('div');
+    item.className='prog-item';
+    item.innerHTML=`
+      <div class="prog-head"><span class="prog-name">${s.name}</span><span class="prog-pct">${s.pct}%</span></div>
+      <div class="prog-bar"><div class="prog-fill" data-pct="${s.pct}"></div></div>
+    `;
+    grid.appendChild(item);
+  });
+  document.getElementById('progress-note').textContent=
+    GAME_PROGRESS.started
+      ? 'Development is underway. Progress updates are logged as work is completed.'
+      : 'Development has not started yet. Progress will be tracked here as the game is built.';
+  setTimeout(()=>{
+    document.querySelectorAll('.prog-fill').forEach(f=>{f.style.width=f.dataset.pct+'%';});
+  },100);
+}
+renderProgress();
 
 // ===== SKY / ABYSS BACKGROUND =====
 const canvas=document.getElementById('bg');

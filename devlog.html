@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hadasphere — Home</title>
-  <meta name="description" content="Hadasphere — an unreleased Roblox analog horror myth game. Beyond the sky, below the abyss.">
+<title>Hadasphere — Development Log</title>
+  <meta name="description" content="Hadasphere — development log. Drafts and update status, newest first.">
 <style>
 :root{
   --bg:#05060a;
@@ -45,38 +45,33 @@ nav a.active{color:#fff;border-bottom-color:var(--purple)}
 @keyframes transIn{0%{opacity:0}20%{opacity:1}80%{opacity:1}100%{opacity:0}}
 @keyframes transGlitch{0%,100%{transform:translate(0)}20%{transform:translate(-4px,2px)}40%{transform:translate(4px,-2px)}60%{transform:translate(-2px,-2px)}80%{transform:translate(2px,2px)}}
 #transition.active .t-txt{animation:transGlitch .65s ease forwards}
-.hero{min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:110px 24px 60px;position:relative}
-.hero::before{content:'';position:absolute;top:0;left:50%;width:1px;height:100%;transform:translateX(-50%);pointer-events:none;background:linear-gradient(180deg,rgba(124,92,255,.6),rgba(77,216,255,.28) 40%,rgba(255,255,255,.06) 62%,transparent 78%)}
-.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--purple);color:var(--violet);padding:6px 16px;border-radius:999px;font-size:12px;letter-spacing:2px;margin-bottom:28px}
-.badge .dot{width:8px;height:8px;border-radius:50%;background:var(--purple);animation:pulse 1.6s infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
-h1{font-size:clamp(44px,9vw,92px);font-weight:900;letter-spacing:4px;line-height:1;color:#fff;margin-bottom:14px}
-h1 .ex{color:var(--purple);text-shadow:0 0 30px rgba(124,92,255,.6)}
-.tagline{font-size:clamp(15px,2.5vw,20px);color:var(--dim);letter-spacing:2px;margin-bottom:12px;font-weight:300}
-.hero-note{font-size:13px;color:var(--violet);opacity:.85;letter-spacing:1px;margin-bottom:40px;font-style:italic}
-.cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-.btn{display:inline-block;padding:14px 34px;border-radius:8px;font-size:14px;letter-spacing:2px;font-weight:600;transition:all .25s;cursor:pointer;border:none;font-family:inherit}
-.btn.discord{background:var(--purple);color:#fff;box-shadow:0 0 24px rgba(124,92,255,.35)}
-.btn.discord:hover{background:#8d6cff;box-shadow:0 0 40px rgba(124,92,255,.55);transform:translateY(-2px)}
-.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
-.btn.ghost:hover{border-color:var(--purple);color:var(--violet)}
-.stats{display:flex;justify-content:center;gap:34px;margin-top:60px;flex-wrap:wrap}
-.stats div{text-align:center}
-.stats .num{font-size:30px;font-weight:800;color:#fff}
-.stats .lbl{font-size:11px;letter-spacing:2px;color:var(--dim);margin-top:2px}
 .page{padding-top:96px}
 section{padding:80px 0}
 section h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:2px;color:#fff;margin-bottom:14px}
 .sec-head{max-width:680px;margin:0 auto 44px}
 .sec-head h2::before{content:'// ';color:var(--purple)}
 .sec-head p{color:var(--dim);font-size:14.5px}
+.log{display:flex;flex-direction:column;gap:18px}
+.entry{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--purple);border-radius:10px;padding:22px 24px;transition:border-color .2s}
+.entry:hover{border-left-color:var(--cyan)}
+.entry .meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.entry .date{font-size:12px;color:var(--dim);letter-spacing:1px}
+.tag{font-size:11px;padding:3px 12px;border-radius:999px;letter-spacing:1px}
+.tag.draft{background:rgba(124,92,255,.15);color:var(--violet);border:1px solid var(--purple)}
+.tag.wip{background:rgba(77,216,255,.12);color:var(--cyan);border:1px solid var(--cyan)}
+.tag.done{background:rgba(77,216,138,.12);color:var(--green);border:1px solid var(--green)}
+.tag.new{background:rgba(255,92,92,.12);color:var(--red);border:1px solid var(--red)}
+.entry h3{font-size:16px;color:#fff;letter-spacing:1px;margin-bottom:6px}
+.entry p{font-size:13.5px;color:var(--dim)}
+.entry ul{margin-top:6px;padding-left:20px}
+.entry li{font-size:13px;color:var(--dim)}
+.entry .foot{font-size:12px;color:var(--violet);margin-top:8px;font-style:italic}
+code{background:#0a0d14;border:1px solid var(--line);padding:1px 6px;border-radius:4px;font-size:12px;color:var(--cyan)}
 footer{border-top:1px solid var(--line);padding:36px 0;text-align:center;color:var(--dim);font-size:13px}
 footer .brand{display:block;margin-bottom:8px}
 .notaff{font-size:11px;opacity:.7}
 @media(max-width:700px){
   nav{display:none}
-  .cta{flex-direction:column}
-  .btn{width:100%}
 }
 </style>
 </head>
@@ -93,8 +88,8 @@ footer .brand{display:block;margin-bottom:8px}
   <div class="container">
     <a class="brand" href="index.html">Hadasphere</a>
     <nav>
-      <a href="index.html" class="active">Home</a>
-      <a href="devlog.html">Dev Log</a>
+      <a href="index.html">Home</a>
+      <a href="devlog.html" class="active">Dev Log</a>
       <a href="progress.html">Progress</a>
       <a href="feedback.html">Feedback</a>
       <a href="guides.html">Guides</a>
@@ -103,23 +98,15 @@ footer .brand{display:block;margin-bottom:8px}
   </div>
 </header>
 
-<div class="hero">
+<section class="page">
   <div class="container">
-    <div class="badge"><span class="dot"></span> IN DEVELOPMENT · NOT RELEASED</div>
-    <h1>Hadasphere</h1>
-    <p class="tagline">Beyond the sky, below the abyss.</p>
-    <p class="hero-note">"Every subject deserves a reason to leave."</p>
-    <div class="cta">
-      <a class="btn discord" href="https://discord.gg/5jfzhHTSVt" target="_blank" rel="noopener">JOIN THE DISCORD</a>
-      <a class="btn ghost" href="progress.html">SEE DEV PROGRESS</a>
+    <div class="sec-head">
+      <h2>Development Log</h2>
+      <p>Drafts and update status, newest first.</p>
     </div>
-    <div class="stats">
-      <div><div class="num" id="stat-drafts">0</div><div class="lbl">DRAFTS</div></div>
-      <div><div class="num" id="stat-wips">0</div><div class="lbl">IN PROGRESS</div></div>
-      <div><div class="num" id="stat-done">0</div><div class="lbl">COMPLETED</div></div>
-    </div>
+    <div class="log" id="log"></div>
   </div>
-</div>
+</section>
 
 <footer>
   <div class="brand">Hadasphere</div>
@@ -128,15 +115,43 @@ footer .brand{display:block;margin-bottom:8px}
 </footer>
 
 <script>
-// ===== STATS =====
-const STAT_MAP={draft:'stat-drafts',wip:'stat-wips',done:'stat-done'};
+// ===== DEVELOPMENT LOG =====
+let LOG=[
+  {
+    date:'2026-07-31',
+    title:'Website Launch · Dev Log is Open',
+    status:'new',
+    body:'First version of the website is live.\nThe Discord server is live too — everyone is welcome to join.',
+    list:['Website v1 launched','Discord server opened','Feedback form enabled']
+  }
+];
+const logEl=document.getElementById('log');
+function renderLog(){
+  logEl.innerHTML='';
+  LOG.forEach(e=>{
+    const el=document.createElement('div');
+    el.className='entry';
+    const statusMap={draft:'Draft',wip:'In Progress',done:'Completed',new:'Latest'};
+    el.innerHTML=`
+      <div class="meta">
+        <span class="date">${e.date}</span>
+        <span class="tag ${e.status}">${statusMap[e.status]||e.status}</span>
+      </div>
+      <h3>${e.title}</h3>
+      <p>${e.body.replace(/\n/g,'<br>')}</p>
+      ${e.list?`<ul>${e.list.map(i=>`<li>${i}</li>`).join('')}</ul>`:''}
+      ${e.foot?`<div class="foot">${e.foot}</div>`:''}
+    `;
+    logEl.appendChild(el);
+  });
+}
+renderLog();
 fetch('devlog.json')
   .then(r=>r.json())
   .then(data=>{
     if(Array.isArray(data)&&data.length>0){
-      Object.keys(STAT_MAP).forEach(k=>{
-        document.getElementById(STAT_MAP[k]).textContent=data.filter(e=>e.status===k).length;
-      });
+      LOG=data;
+      renderLog();
     }
   })
   .catch(()=>{});
