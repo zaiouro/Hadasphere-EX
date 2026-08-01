@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0714">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0714'/%3E%3Ctext x='16' y='23' font-family='Arial' font-size='18' font-weight='bold' text-anchor='middle' fill='%237c5cff'%3EH%3C/text%3E%3C/svg%3E">
 <title>Hadasphere — Development Log</title>
   <meta name="description" content="Hadasphere — development log. Drafts and update status, newest first.">
 <style>
@@ -34,7 +36,6 @@ canvas#bg{position:fixed;inset:0;z-index:-3}
 header{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(10px);background:rgba(5,6,10,.7);border-bottom:1px solid rgba(28,34,51,.6)}
 header .container{display:flex;align-items:center;justify-content:space-between;height:64px}
 .brand{font-weight:800;letter-spacing:2px;font-size:15px;color:#fff}
-.brand span{color:var(--purple)}
 nav{display:flex;gap:22px;align-items:center}
 nav a{color:var(--dim);font-size:13px;letter-spacing:1px;transition:color .2s;padding-bottom:2px;border-bottom:1px solid transparent}
 nav a:hover{color:#fff}
@@ -74,8 +75,15 @@ code{background:#0a0d14;border:1px solid var(--line);padding:1px 6px;border-radi
 footer{border-top:1px solid var(--line);padding:36px 0;text-align:center;color:var(--dim);font-size:13px}
 footer .brand{display:block;margin-bottom:8px}
 .notaff{font-size:11px;opacity:.7}
+.menu-btn{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;align-items:center;justify-content:center}
+.menu-btn span{width:22px;height:2px;background:var(--text);border-radius:2px;transition:all .25s;display:block}
+.menu-btn.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.menu-btn.open span:nth-child(2){opacity:0}
+.menu-btn.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 @media(max-width:700px){
-  nav{display:none}
+  .menu-btn{display:flex}
+  nav{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(5,6,10,.97);border-bottom:1px solid var(--line);flex-direction:column;align-items:center;padding:18px 0;gap:16px;z-index:49}
+  nav.open{display:flex}
 }
 </style>
 </head>
@@ -99,6 +107,7 @@ footer .brand{display:block;margin-bottom:8px}
       <a href="guides.html">Guides</a>
       <a href="discord.html">Discord</a>
     </nav>
+    <button class="menu-btn" id="menu-btn" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </header>
 
@@ -219,6 +228,16 @@ document.querySelectorAll('a[href]').forEach(a=>{
     transition.classList.add('active');
     setTimeout(()=>location.href=href,1000);
   });
+});
+
+// ===== MOBILE MENU =====
+const menuBtn=document.getElementById('menu-btn'),mNav=document.querySelector('nav');
+menuBtn.addEventListener('click',()=>{
+  const open=mNav.classList.toggle('open');
+  menuBtn.classList.toggle('open',open);
+});
+mNav.addEventListener('click',e=>{
+  if(e.target.tagName==='A'){mNav.classList.remove('open');menuBtn.classList.remove('open');}
 });
 
 // ===== SELECTION & CONTEXT MENU LOCK =====
