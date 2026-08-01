@@ -1,4 +1,4 @@
-html{scrollbar-color:#1c2233 #05060a;scrollbar-width:thin}
+html{scroll-behavior:smooth;scrollbar-color:#1c2233 #05060a;scrollbar-width:thin}
 html:has(#transition.cover),html:has(#transition.active),body:has(#transition.cover),body:has(#transition.active){overflow:hidden}
 ::-webkit-scrollbar{width:10px;height:10px}
 ::-webkit-scrollbar-track{background:#05060a}
