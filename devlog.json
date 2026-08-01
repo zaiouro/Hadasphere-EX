@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-08-01",
+    "title": "Website",
+    "status": "new",
+    "body": "Are you excited for its release?\nFixed and done!"
+  },
+  {
     "date": "2026-07-31",
     "title": "adding door system and box searching",
     "status": "draft",
