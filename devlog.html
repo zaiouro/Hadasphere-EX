@@ -40,17 +40,17 @@ nav{display:flex;gap:22px;align-items:center}
 nav a{color:var(--dim);font-size:13px;letter-spacing:1px;transition:color .2s;padding-bottom:2px;border-bottom:1px solid transparent}
 nav a:hover{color:#fff}
 nav a.active{color:#fff;border-bottom-color:var(--purple)}
-#transition{position:fixed;inset:0;background:#0a0714;z-index:1000;pointer-events:none;opacity:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px}
-#transition.cover,#transition.loading{opacity:1;pointer-events:auto}
-#transition.loading{animation:transLoad 1.8s ease forwards}
-#transition.active{animation:transIn 1.8s ease forwards}
+#transition{position:fixed;inset:0;background:#0a0714;z-index:1000;pointer-events:none;opacity:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px}
+#transition.cover,#transition.active{opacity:1;pointer-events:auto}
+#transition.active{animation:transRun 2.2s ease forwards}
 #transition .t-txt{font-size:12px;letter-spacing:6px;color:var(--violet);opacity:.8}
-@keyframes transLoad{0%{opacity:1}65%{opacity:1}100%{opacity:0}}
-@keyframes transIn{0%{opacity:0}10%{opacity:1}80%{opacity:1}100%{opacity:0}}
-@keyframes transGlitch{0%,10%{transform:translate(0)}12%{transform:translate(-4px,2px)}16%{transform:translate(4px,-2px)}20%{transform:translate(-2px,-2px)}24%{transform:translate(2px,2px)}28%,100%{transform:translate(0)}}
-#transition.active .t-txt{animation:transGlitch 1.8s ease forwards}
-#transition.loading .t-txt{animation:txtLoad 1.8s ease forwards}
-@keyframes txtLoad{0%{opacity:0;letter-spacing:6px}15%{opacity:1;letter-spacing:12px}65%{opacity:1}100%{opacity:0}}
+#transition.active .t-txt{animation:txtRun 2.2s ease forwards}
+#transition .bar{width:180px;height:2px;background:rgba(124,92,255,.18);overflow:hidden;border-radius:2px}
+#transition .bar i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--purple),var(--cyan))}
+#transition.active .bar i{animation:barFill 2.2s ease forwards}
+@keyframes transRun{0%{opacity:1}82%{opacity:1}100%{opacity:0}}
+@keyframes txtRun{0%{opacity:0;letter-spacing:6px}8%{opacity:1;letter-spacing:12px}75%{opacity:1}100%{opacity:0}}
+@keyframes barFill{0%{width:0%}65%{width:75%}90%{width:92%}100%{width:100%}}
 .page{padding-top:96px}
 section{padding:80px 0}
 section h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:2px;color:#fff;margin-bottom:14px}
@@ -95,7 +95,7 @@ footer .brand{display:block;margin-bottom:8px}
 <div class="aurora"></div>
 <div class="abyss"></div>
 <div class="noise"></div>
-<div id="transition" class="cover"><span class="t-txt">Hadasphere</span></div>
+<div id="transition" class="cover"><span class="t-txt">Hadasphere</span><div class="bar"><i></i></div></div>
 
 <header>
   <div class="container">
@@ -215,22 +215,19 @@ updateGradient();
 
 // ===== PAGE TRANSITION =====
 const transition=document.getElementById('transition');
+const BAR_MS=1600;
 window.addEventListener('load',()=>{
-  transition.classList.add('loading');
-  setTimeout(()=>{
-    transition.classList.remove('loading');
-    transition.classList.remove('cover');
-  },1800);
+  transition.classList.remove('cover');
+  transition.classList.add('active');
+  setTimeout(()=>transition.classList.remove('active'),2200);
 });
 document.querySelectorAll('a[href]').forEach(a=>{
   const href=a.getAttribute('href');
   if(!href||href.startsWith('http'))return;
   a.addEventListener('click',e=>{
     e.preventDefault();
-    transition.classList.remove('active');
-    void transition.offsetWidth;
     transition.classList.add('active');
-    setTimeout(()=>location.href=href,1000);
+    setTimeout(()=>location.href=href,BAR_MS);
   });
 });
 
