@@ -7,6 +7,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0714'/%3E%3Ctext x='16' y='23' font-family='Arial' font-size='18' font-weight='bold' text-anchor='middle' fill='%237c5cff'%3EH%3C/text%3E%3C/svg%3E">
 <title>Hadasphere — Home</title>
   <meta name="description" content="Hadasphere — an unreleased Roblox analog horror myth game. Beyond the sky, below the abyss.">
+<link rel="stylesheet" href="transition.css">
 <style>
 :root{
   --bg:#05060a;
@@ -40,17 +41,6 @@ nav{display:flex;gap:22px;align-items:center}
 nav a{color:var(--dim);font-size:13px;letter-spacing:1px;transition:color .2s;padding-bottom:2px;border-bottom:1px solid transparent}
 nav a:hover{color:#fff}
 nav a.active{color:#fff;border-bottom-color:var(--purple)}
-#transition{position:fixed;inset:0;background:#0a0714;z-index:1000;pointer-events:none;opacity:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px}
-#transition.cover,#transition.active{opacity:1;pointer-events:auto}
-#transition.active{animation:transRun 2.2s ease forwards}
-#transition .t-txt{font-size:12px;letter-spacing:6px;color:var(--violet);opacity:.8}
-#transition.active .t-txt{animation:txtRun 2.2s ease forwards}
-#transition .bar{width:180px;height:2px;background:rgba(124,92,255,.18);overflow:hidden;border-radius:2px}
-#transition .bar i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--purple),var(--cyan))}
-#transition.active .bar i{animation:barFill 2.2s ease forwards}
-@keyframes transRun{0%{opacity:1}82%{opacity:1}100%{opacity:0}}
-@keyframes txtRun{0%{opacity:0;letter-spacing:6px}8%{opacity:1;letter-spacing:12px}75%{opacity:1}100%{opacity:0}}
-@keyframes barFill{0%{width:0%}65%{width:75%}90%{width:92%}100%{width:100%}}
 .hero{min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:110px 24px 60px;position:relative}
 .hero::before{content:'';position:absolute;top:0;left:50%;width:1px;height:100%;transform:translateX(-50%);pointer-events:none;background:linear-gradient(180deg,rgba(124,92,255,.6),rgba(77,216,255,.28) 40%,rgba(255,255,255,.06) 62%,transparent 78%)}
 .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--purple);color:var(--violet);padding:6px 16px;border-radius:999px;font-size:12px;letter-spacing:2px;margin-bottom:28px}
@@ -200,28 +190,6 @@ function updateGradient(){
 addEventListener('scroll',updateGradient,{passive:true});
 updateGradient();
 
-// ===== PAGE TRANSITION =====
-const transition=document.getElementById('transition');
-const BAR_MS=1600;
-const dataWait=window.__pageReady?Promise.race([window.__pageReady,new Promise(r=>setTimeout(r,4000))]):Promise.resolve();
-Promise.all([
-  new Promise(r=>document.readyState==='complete'?r():addEventListener('load',r,{once:true})),
-  dataWait
-]).then(()=>{
-  transition.classList.remove('cover');
-  transition.classList.add('active');
-  setTimeout(()=>transition.classList.remove('active'),2200);
-});
-document.querySelectorAll('a[href]').forEach(a=>{
-  const href=a.getAttribute('href');
-  if(!href||href.startsWith('http'))return;
-  a.addEventListener('click',e=>{
-    e.preventDefault();
-    transition.classList.add('active');
-    setTimeout(()=>location.href=href,BAR_MS);
-  });
-});
-
 // ===== MOBILE MENU =====
 const menuBtn=document.getElementById('menu-btn'),mNav=document.querySelector('nav');
 menuBtn.addEventListener('click',()=>{
@@ -240,5 +208,6 @@ document.addEventListener('keydown',e=>{
   }
 });
 </script>
+<script src="transition.js"></script>
 </body>
 </html>
