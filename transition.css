@@ -1,3 +1,9 @@
+html{scrollbar-color:#1c2233 #05060a;scrollbar-width:thin}
+html:has(#transition.cover),html:has(#transition.active),body:has(#transition.cover),body:has(#transition.active){overflow:hidden}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:#05060a}
+::-webkit-scrollbar-thumb{background:#1c2233;border-radius:5px}
+::-webkit-scrollbar-thumb:hover{background:#7c5cff}
 #transition{position:fixed;inset:0;background:#0a0714;z-index:1000;pointer-events:none;opacity:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px}
 #transition.cover,#transition.active{opacity:1;pointer-events:auto}
 #transition.active{animation:transRun 2.2s ease forwards}
