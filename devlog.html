@@ -160,15 +160,18 @@ function renderLog(){
   });
 }
 renderLog();
-fetch('devlog.json')
-  .then(r=>r.json())
-  .then(data=>{
-    if(Array.isArray(data)&&data.length>0){
-      LOG=data;
-      renderLog();
-    }
-  })
-  .catch(()=>{});
+window.__pageReady=new Promise(res=>{
+  fetch('devlog.json')
+    .then(r=>r.json())
+    .then(data=>{
+      if(Array.isArray(data)&&data.length>0){
+        LOG=data;
+        renderLog();
+      }
+      res();
+    })
+    .catch(()=>res());
+});
 
 // ===== SKY / ABYSS BACKGROUND =====
 const canvas=document.getElementById('bg');
@@ -216,7 +219,11 @@ updateGradient();
 // ===== PAGE TRANSITION =====
 const transition=document.getElementById('transition');
 const BAR_MS=1600;
-window.addEventListener('load',()=>{
+const dataWait=window.__pageReady?Promise.race([window.__pageReady,new Promise(r=>setTimeout(r,4000))]):Promise.resolve();
+Promise.all([
+  new Promise(r=>document.readyState==='complete'?r():addEventListener('load',r,{once:true})),
+  dataWait
+]).then(()=>{
   transition.classList.remove('cover');
   transition.classList.add('active');
   setTimeout(()=>transition.classList.remove('active'),2200);

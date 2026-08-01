@@ -210,7 +210,11 @@ updateGradient();
 // ===== PAGE TRANSITION =====
 const transition=document.getElementById('transition');
 const BAR_MS=1600;
-window.addEventListener('load',()=>{
+const dataWait=window.__pageReady?Promise.race([window.__pageReady,new Promise(r=>setTimeout(r,4000))]):Promise.resolve();
+Promise.all([
+  new Promise(r=>document.readyState==='complete'?r():addEventListener('load',r,{once:true})),
+  dataWait
+]).then(()=>{
   transition.classList.remove('cover');
   transition.classList.add('active');
   setTimeout(()=>transition.classList.remove('active'),2200);
