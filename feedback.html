@@ -40,11 +40,15 @@ nav a{color:var(--dim);font-size:13px;letter-spacing:1px;transition:color .2s;pa
 nav a:hover{color:#fff}
 nav a.active{color:#fff;border-bottom-color:var(--purple)}
 #transition{position:fixed;inset:0;background:#0a0714;z-index:1000;pointer-events:none;opacity:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px}
-#transition.active{animation:transIn .65s ease forwards}
+#transition.loading{opacity:1;pointer-events:auto;animation:transLoad 1.8s ease forwards}
+#transition.active{animation:transIn 1.8s ease forwards}
 #transition .t-txt{font-size:12px;letter-spacing:6px;color:var(--violet);opacity:.8}
-@keyframes transIn{0%{opacity:0}20%{opacity:1}80%{opacity:1}100%{opacity:0}}
+@keyframes transLoad{0%{opacity:1}65%{opacity:1}100%{opacity:0}}
+@keyframes transIn{0%{opacity:0}10%{opacity:1}80%{opacity:1}100%{opacity:0}}
 @keyframes transGlitch{0%,100%{transform:translate(0)}20%{transform:translate(-4px,2px)}40%{transform:translate(4px,-2px)}60%{transform:translate(-2px,-2px)}80%{transform:translate(2px,2px)}}
-#transition.active .t-txt{animation:transGlitch .65s ease forwards}
+#transition.active .t-txt{animation:transGlitch 1.8s ease forwards}
+#transition.loading .t-txt{animation:transGlitch 1.8s ease forwards,txtLoad 1.8s ease forwards}
+@keyframes txtLoad{0%{opacity:0}12%{opacity:1}65%{opacity:1}100%{opacity:0}}
 .page{padding-top:96px}
 section{padding:80px 0}
 section h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:2px;color:#fff;margin-bottom:14px}
@@ -276,6 +280,10 @@ updateGradient();
 
 // ===== PAGE TRANSITION =====
 const transition=document.getElementById('transition');
+window.addEventListener('load',()=>{
+  transition.classList.add('loading');
+  setTimeout(()=>transition.classList.remove('loading'),1800);
+});
 document.querySelectorAll('a[href]').forEach(a=>{
   const href=a.getAttribute('href');
   if(!href||href.startsWith('http'))return;
@@ -284,7 +292,7 @@ document.querySelectorAll('a[href]').forEach(a=>{
     transition.classList.remove('active');
     void transition.offsetWidth;
     transition.classList.add('active');
-    setTimeout(()=>location.href=href,300);
+    setTimeout(()=>location.href=href,1000);
   });
 });
 
